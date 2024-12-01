@@ -1,0 +1,39 @@
+@startuml
+title 会社反社チェックのER図
+' hide the spot
+hide circle
+
+skinparam linetype ortho
+
+package client {
+    entity "shop" {
+        + shop_id
+        --
+        - name
+        - phone
+        - email
+        - url
+        - area_id
+    }
+
+    entity "area" {
+        + area_id
+        --
+        - name
+    }
+
+    shop ||--|| area
+}
+
+package admin {
+    entity "user" {
+        + user_id
+        --
+        - name
+        - email
+        - password
+        - role
+    }
+}
+
+@enduml

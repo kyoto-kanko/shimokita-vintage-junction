@@ -3,6 +3,9 @@ plugins {
     kotlin("plugin.spring") version "2.1.0"
     id("org.springframework.boot") version "3.4.0"
     id("io.spring.dependency-management") version "1.1.6"
+    // OpenAPI Generator Gradle Plugin (https://github.com/OpenAPITools/openapi-generator/)
+    id("org.openapi.generator") version "7.10.0"
+
 }
 
 group = "com"
@@ -52,4 +55,9 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Generateの設定ドキュメント(https://openapi-generator.tech/docs/generators)
+tasks.openApiGenerate {
+    // あとで設定を追加
 }

@@ -5,7 +5,6 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     // OpenAPI Generator Gradle Plugin (https://github.com/OpenAPITools/openapi-generator/)
     id("org.openapi.generator") version "7.10.0"
-
 }
 
 group = "com"
@@ -25,6 +24,9 @@ val exposedVersion: String by project
 dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.26")
+    implementation("io.swagger.core.v3:swagger-models:2.2.26")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -59,5 +61,27 @@ tasks.withType<Test> {
 
 // Generateの設定ドキュメント(https://openapi-generator.tech/docs/generators)
 tasks.openApiGenerate {
-    // あとで設定を追加
+    generatorName.set("kotlin-spring")
+    inputSpec.set("$rootDir/src/main/resources/documentation.yaml")
+    val output: Provider<Directory> = layout.buildDirectory.dir("generated")
+    output.get().asFile
+    outputDir.set(output.map { it.asFile.path })
+    configOptions.set(
+        mapOf(
+            "interfaceOnly" to "true",
+            "useSpringBoot3" to "true",
+        )
+    )
+}
+
+tasks.compileKotlin {
+    dependsOn(tasks.openApiGenerate)
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir(tasks.openApiGenerate.flatMap { it.outputDir })
+        }
+    }
 }

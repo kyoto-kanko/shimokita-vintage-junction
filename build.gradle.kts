@@ -25,7 +25,7 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("io.swagger.core.v3:swagger-annotations:2.2.26")
-    implementation("io.swagger.core.v3:swagger-models:2.2.26")
+    implementation("io.swagger.core.v3:swagger-models:2.2.27")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
